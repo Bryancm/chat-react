@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import {
   Route,
   Switch,
+  Redirect,
   useRouteMatch,
   useLocation,
   useHistory,
 } from "react-router-dom";
 import Home from "./home";
 import Chat from "./chat";
+import NotFound from "./notFound";
 
 const App = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
   const match = useRouteMatch();
@@ -16,7 +18,7 @@ const App = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
 
   useEffect(() => {
     if (location.pathname === "/") {
-      !room ? history.push("/chat") : history.push("/chat");
+      !room ? history.push("/home") : history.push("/chat");
     }
   }, [room, location, history]);
 
@@ -42,6 +44,10 @@ const App = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
           setName={setName}
         />
       </Route>
+      <Route path={`${match.url}404`}>
+        <NotFound />
+      </Route>
+      <Redirect to="/404" />
     </Switch>
   );
 };

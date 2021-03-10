@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../components/avatar";
 import { avatars, popular, popula2 } from "../assets/data";
-import "../styles/home.css";
+// import "../styles/home.css";
 
 const Home = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
   return (

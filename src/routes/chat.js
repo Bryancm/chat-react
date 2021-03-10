@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import "../styles/chat.css";
+// import "../styles/chat.css";
 import UserInfo from "../components/userInfo";
 import UserList from "../components/userList";
 import ChatFooter from "../components/chatFooter";

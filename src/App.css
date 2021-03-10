@@ -1,3 +1,6 @@
+@import url("./styles/home.css");
+@import url("./styles//chat.css");
+
 .button-container {
   width: 100%;
   display: flex;

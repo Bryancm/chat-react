@@ -1,6 +1,6 @@
 import React from "react";
 import { avatars } from "../assets/data";
-import "../styles/chat.css";
+// import "../styles/chat.css";
 
 const UserList = () => {
   return (
