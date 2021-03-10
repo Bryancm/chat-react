@@ -25,5 +25,5 @@ export const avatars = [
   },
 ];
 
-export const popular = ["Developers", "Food", "Desk ergonomics", "Mac vs PC"];
+export const popular = ["Developers", "Food", "Desk", "Ergonomics"];
 export const popula2 = ["Just do it", "React", "Home office"];
