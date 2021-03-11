@@ -22,6 +22,7 @@ function App() {
 
   useEffect(() => {
     socket.on("updateUserList", (newMembers) => {
+      console.log("new members", newMembers);
       setMembers(newMembers);
     });
 

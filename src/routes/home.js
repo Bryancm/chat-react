@@ -3,7 +3,16 @@ import { useHistory } from "react-router-dom";
 import Avatar from "../components/avatar";
 import { avatars, popular, popula2 } from "../assets/data";
 
-const Home = ({ room, setRoom, avatar, setAvatar, name, setName, socket }) => {
+const Home = ({
+  room,
+  setRoom,
+  avatar,
+  setAvatar,
+  name,
+  setName,
+  socket,
+  setMessages,
+}) => {
   const [textError, setTextError] = useState("");
   const history = useHistory();
 
@@ -15,7 +24,12 @@ const Home = ({ room, setRoom, avatar, setAvatar, name, setName, socket }) => {
 
   const join = (err) => {
     if (err) return setTextError(err);
+    socket.emit("getMessageList", room, updateMessages);
     history.push("/chat");
+  };
+
+  const updateMessages = (messages) => {
+    setMessages(messages);
   };
 
   return (
