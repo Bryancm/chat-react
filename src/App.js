@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import moment from "moment";
 import SocketContext from "./util/socketContext";
 import { io } from "socket.io-client";
 import MainApp from "./routes";
@@ -22,16 +21,11 @@ function App() {
 
   useEffect(() => {
     socket.on("updateUserList", (newMembers) => {
-      console.log("new members", newMembers);
       setMembers(newMembers);
     });
 
     socket.on("newMessage", (newMessage) => {
-      const createdAt = moment(newMessage.createdAt).format("h:mm a");
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { ...newMessage, createdAt },
-      ]);
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
   }, []);
 

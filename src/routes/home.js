@@ -19,17 +19,16 @@ const Home = ({
   const joinChat = () => {
     console.log("join");
     setTextError("");
+    if (!socket.connected) socket.connect();
     socket.emit("join", { room, name, url: avatar }, join);
   };
 
   const join = (err) => {
     if (err) return setTextError(err);
-    socket.emit("getMessageList", room, updateMessages);
+    localStorage.setItem("user", JSON.stringify({ name, room, avatar }));
+    localStorage.setItem("ids", JSON.stringify([socket.id]));
     history.push("/chat");
-  };
-
-  const updateMessages = (messages) => {
-    setMessages(messages);
+    // socket.connect();
   };
 
   return (

@@ -40,6 +40,10 @@ const Chat = ({
     gotoBottom("messageList");
   }, [messages]);
 
+  useEffect(() => {
+    gotoBottom("messageList");
+  }, []);
+
   const leave = () => {
     setRoom("");
     setName("");
@@ -49,6 +53,9 @@ const Chat = ({
     setMessages([]);
     setMembers([]);
     history.push("/");
+    socket.disconnect();
+    localStorage.setItem("user", null);
+    localStorage.setItem("ids", null);
   };
 
   return (

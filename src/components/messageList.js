@@ -1,16 +1,19 @@
 import React from "react";
 import MessageItem from "./messageItem";
+import moment from "moment";
 
 const MessageList = ({ messages, socket }) => {
+  const ids = JSON.parse(localStorage.getItem("ids"));
+  console.log(ids);
   return (
     <div className="message-list-container">
       {messages.map((m, index) => (
         <MessageItem
           key={index}
-          userMessage={m.userId && m.userId === socket.id}
+          userMessage={m.userId && ids && ids.includes(m.userId)}
           from={m.from}
           text={m.text}
-          createdAt={m.createdAt}
+          createdAt={moment(Number(m.createdAt)).format("h:mm a")}
           url={m.url}
         />
       ))}
