@@ -1,29 +1,19 @@
 import React from "react";
 import MessageItem from "./messageItem";
 
-const MessageList = () => {
+const MessageList = ({ messages, socket }) => {
   return (
     <div className="message-list-container">
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
-      <MessageItem userMessage={true} />
-      <MessageItem />
+      {messages.map((m, index) => (
+        <MessageItem
+          key={index}
+          userMessage={m.userId && m.userId === socket.id}
+          from={m.from}
+          text={m.text}
+          createdAt={m.createdAt}
+          url={m.url}
+        />
+      ))}
     </div>
   );
 };

@@ -11,7 +11,19 @@ import Home from "./home";
 import Chat from "./chat";
 import NotFound from "./notFound";
 
-const App = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
+const App = ({
+  socket,
+  room,
+  setRoom,
+  avatar,
+  setAvatar,
+  name,
+  setName,
+  messages,
+  setMessages,
+  members,
+  setMembers,
+}) => {
   const match = useRouteMatch();
   const location = useLocation();
   const history = useHistory();
@@ -26,22 +38,32 @@ const App = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
     <Switch>
       <Route path={`${match.url}home`}>
         <Home
+          socket={socket}
           room={room}
           setRoom={setRoom}
           avatar={avatar}
           setAvatar={setAvatar}
           name={name}
           setName={setName}
+          messages={messages}
+          setMessages={setMessages}
+          members={members}
+          setMembers={setMembers}
         />
       </Route>
       <Route path={`${match.url}chat`}>
         <Chat
+          socket={socket}
           room={room}
           setRoom={setRoom}
           avatar={avatar}
           setAvatar={setAvatar}
           name={name}
           setName={setName}
+          messages={messages}
+          setMessages={setMessages}
+          members={members}
+          setMembers={setMembers}
         />
       </Route>
       <Route path={`${match.url}404`}>

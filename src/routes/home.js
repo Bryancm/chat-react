@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Avatar from "../components/avatar";
 import { avatars, popular, popula2 } from "../assets/data";
-// import "../styles/home.css";
 
-const Home = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
+const Home = ({ room, setRoom, avatar, setAvatar, name, setName, socket }) => {
+  const [textError, setTextError] = useState("");
+  const history = useHistory();
+
+  const joinChat = () => {
+    console.log("join");
+    setTextError("");
+    socket.emit("join", { room, name, url: avatar }, join);
+  };
+
+  const join = (err) => {
+    if (err) return setTextError(err);
+    history.push("/chat");
+  };
+
   return (
     <div className="home-container">
       <h1 className="text-large text-dark-grey">Join a chat</h1>
@@ -18,6 +32,7 @@ const Home = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
           placeholder="John"
           onChange={(e) => setName(e.target.value)}
         />
+
         <div className="label-container">
           <span className="text-medium text-dark-green">Avatar</span>
         </div>
@@ -41,6 +56,7 @@ const Home = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
           placeholder="Developers"
           onChange={(e) => setRoom(e.target.value)}
         />
+
         <div className="label-container">
           <span className="text-medium text-dark-green">Popular rooms</span>
         </div>
@@ -58,8 +74,11 @@ const Home = ({ room, setRoom, avatar, setAvatar, name, setName }) => {
             </span>
           ))}
         </div>
+        {textError && <span className="text-small text-red">{textError}</span>}
         <div className="button-container">
-          <button className="button">Join</button>
+          <button className="button" onClick={joinChat}>
+            Join
+          </button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import menuIcon from "../assets/menuIcon.png";
@@ -6,7 +6,23 @@ import peopleIcon from "../assets/user.svg";
 import chatIcon from "../assets/chat.svg";
 import logoutIcon from "../assets/logout.svg";
 
-const ChatFooter = ({ setView }) => {
+const ChatFooter = ({ setView, socket, leave }) => {
+  const [text, setText] = useState("");
+
+  const sendMessage = () => {
+    socket.emit("createMessage", { text }, cleanInput);
+  };
+
+  const cleanInput = () => {
+    setText("");
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
     <div className="chat-footer-container">
       <div className="mobile-menu">
@@ -27,7 +43,7 @@ const ChatFooter = ({ setView }) => {
               <span>Chat</span>
               <img className="icon" src={chatIcon} alt="chat" />
             </span>
-            <span className="menu-option">
+            <span className="menu-option" onClick={leave}>
               <span>Leave</span>
               <img className="icon" src={logoutIcon} alt="leave" />
             </span>
@@ -35,8 +51,19 @@ const ChatFooter = ({ setView }) => {
         </Popup>
       </div>
       <div className="chat-footer-input-container shadow-shorter">
-        <input type="text" className="chat-input" placeholder="Aa" />
-        <button style={{ marginLeft: 10 }} className="button">
+        <input
+          value={text}
+          type="text"
+          className="chat-input"
+          placeholder="Aa"
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          style={{ marginLeft: 10 }}
+          className="button"
+          onClick={sendMessage}
+        >
           Send
         </button>
       </div>

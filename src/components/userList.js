@@ -1,14 +1,18 @@
 import React from "react";
-import { avatars } from "../assets/data";
+import peopleIcon from "../assets/user.svg";
 // import "../styles/chat.css";
 
-const UserList = () => {
+const UserList = ({ members }) => {
   return (
     <div className="user-list-container">
-      {avatars.map((a) => (
-        <div key={a.url} className="user-list-item">
-          <img src={a.url} className="user-list-avatar" alt="avatar" />
-          <span className="text-medium text-dark-green">{a.name}</span>
+      {members.map((m, index) => (
+        <div key={index} className="user-list-item">
+          <img
+            src={m.url ? m.url : peopleIcon}
+            className="user-list-avatar"
+            alt="avatar"
+          />
+          <span className="text-medium text-dark-green">{m.name}</span>
         </div>
       ))}
     </div>
