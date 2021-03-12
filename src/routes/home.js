@@ -3,21 +3,11 @@ import { useHistory } from "react-router-dom";
 import Avatar from "../components/avatar";
 import { avatars, popular, popula2 } from "../assets/data";
 
-const Home = ({
-  room,
-  setRoom,
-  avatar,
-  setAvatar,
-  name,
-  setName,
-  socket,
-  setMessages,
-}) => {
+const Home = ({ room, setRoom, avatar, setAvatar, name, setName, socket }) => {
   const [textError, setTextError] = useState("");
   const history = useHistory();
 
   const joinChat = () => {
-    console.log("join");
     setTextError("");
     if (!socket.connected) socket.connect();
     socket.emit("join", { room, name, url: avatar }, join);
@@ -28,7 +18,6 @@ const Home = ({
     localStorage.setItem("user", JSON.stringify({ name, room, avatar }));
     localStorage.setItem("ids", JSON.stringify([socket.id]));
     history.push("/chat");
-    // socket.connect();
   };
 
   return (
@@ -71,7 +60,7 @@ const Home = ({
         />
 
         <div className="label-container">
-          <span className="text-medium text-dark-green">Popular rooms</span>
+          <span className="text-medium text-dark-green">Highlighted rooms</span>
         </div>
         <div className="popular-container">
           {popular.map((p) => (

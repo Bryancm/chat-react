@@ -4,7 +4,7 @@ import moment from "moment";
 
 const MessageList = ({ messages, socket }) => {
   const ids = JSON.parse(localStorage.getItem("ids"));
-  console.log(ids);
+
   return (
     <div className="message-list-container">
       {messages.map((m, index) => (
