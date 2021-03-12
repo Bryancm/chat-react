@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
-import SocketContext from "./util/socketContext";
 import { io } from "socket.io-client";
 import MainApp from "./routes";
 import "./App.css";
@@ -31,27 +30,21 @@ function App() {
 
   return (
     <div>
-      <SocketContext.Provider value={socket}>
-        <BrowserRouter>
-          <SocketContext.Consumer>
-            {(s) => (
-              <MainApp
-                socket={s}
-                room={room}
-                setRoom={setRoom}
-                avatar={avatar}
-                setAvatar={setAvatar}
-                name={name}
-                setName={setName}
-                messages={messages}
-                setMessages={setMessages}
-                members={members}
-                setMembers={setMembers}
-              />
-            )}
-          </SocketContext.Consumer>
-        </BrowserRouter>
-      </SocketContext.Provider>
+      <BrowserRouter>
+        <MainApp
+          socket={socket}
+          room={room}
+          setRoom={setRoom}
+          avatar={avatar}
+          setAvatar={setAvatar}
+          name={name}
+          setName={setName}
+          messages={messages}
+          setMessages={setMessages}
+          members={members}
+          setMembers={setMembers}
+        />
+      </BrowserRouter>
     </div>
   );
 }

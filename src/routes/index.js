@@ -31,30 +31,38 @@ const App = ({
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
 
+    const updateMessages = (messages) => {
+      setMessages(messages);
+    };
+
+    const updateIds = () => {
+      const ids = JSON.parse(localStorage.getItem("ids"));
+      if (ids) {
+        const newIds = [...ids, socket.id];
+        localStorage.setItem("ids", JSON.stringify(newIds));
+      }
+    };
+
+    const updateUser = (err) => {
+      if (err) return console.log(err);
+      localStorage.setItem("user", JSON.stringify(user));
+      setName(user.name);
+      setRoom(user.room);
+      setAvatar(user.avatar);
+      updateIds();
+      socket.emit("getMessagesList", user.room, updateMessages);
+    };
+
     if (location.pathname === "/") {
       !user || !user.room ? history.push("/home") : history.push("/chat");
     }
+
     if (location.pathname === "/chat") {
       if (!user) return history.push("/home");
       socket.emit(
         "join",
         { room: user.room, name: user.name, url: user.avatar },
-        (err) => {
-          if (err) return console.log(err);
-          localStorage.setItem("user", JSON.stringify(user));
-          setName(user.name);
-          setRoom(user.room);
-          setAvatar(user.avatar);
-          const ids = JSON.parse(localStorage.getItem("ids"));
-          if (ids) {
-            const newIds = [...ids, socket.id];
-            localStorage.setItem("ids", JSON.stringify(newIds));
-          }
-          socket.emit("getMessagesList", user.room, (messages) => {
-            setMessages(messages);
-            console.log("get messages", messages);
-          });
-        }
+        updateUser
       );
     }
   }, [socket, setMessages, setAvatar, setName, setRoom, location, history]);
